@@ -67,23 +67,206 @@ adb install -r app/build/outputs/apk/debug/app-debug.apk
 
 ---
 
-## 📡 Intent API
+## 📡 Supported Intent Commands (API via ADB/Broadcast)
 
-You can control GPS Rider from other apps using Intents:
+You can control all features of the app programmatically or via ADB commands using Intents. Below is a list of all supported commands with descriptions and practical usage examples:
 
-`adb shell am startservice -a ...`
+---
 
-- **Start fake location**: `com.dvhamham.START_FAKE_LOCATION`
+### 1. Start Fake Location
+**Description:** Activate the fake location service.
 
-- **Stop fake location**: `com.hamham.gpsrider.STOP_FAKE_LOCATION`
+```sh
+adb shell am broadcast -a com.dvhamham.START_FAKE_LOCATION
+```
 
-- **Toggle fake location**: `com.hamham.gpsrider.TOGGLE_FAKE_LOCATION`
+---
 
-- **Set custom location**: `com.hamham.gpsrider.SET_CUSTOM_LOCATION` --es `latitude` --es `longitude`
+### 2. Stop Fake Location
+**Description:** Deactivate the fake location service.
 
-- **Set Favorite location**: `com.dvhamham.SET_FAVORITE_LOCATION --es favorite_name favName` -
+```sh
+adb shell am broadcast -a com.dvhamham.STOP_FAKE_LOCATION
+```
 
-  
+---
+
+### 3. Toggle Fake Location
+**Description:** Toggle the fake location service (start if stopped, stop if started).
+
+```sh
+adb shell am broadcast -a com.dvhamham.TOGGLE_FAKE_LOCATION
+```
+
+---
+
+### 4. Set Custom Location
+**Description:** Set a new fake location using latitude and longitude.
+
+```sh
+adb shell am broadcast -a com.dvhamham.SET_CUSTOM_LOCATION --es latitude "35.6895" --es longitude "139.6917"
+```
+
+---
+
+### 5. Set Favorite Location
+**Description:** Set the fake location based on a saved favorite name.
+
+```sh
+adb shell am broadcast -a com.dvhamham.SET_FAVORITE_LOCATION --es favorite_name "Home"
+```
+
+---
+
+### 6. Get Service Status
+**Description:** Check if the fake location service is active or not.
+
+```sh
+adb shell am broadcast -a com.dvhamham.GET_STATUS
+```
+
+---
+
+### 7. Get Current Location
+**Description:** Retrieve the current coordinates of the fake location.
+
+```sh
+adb shell am broadcast -a com.dvhamham.GET_CURRENT_LOCATION
+```
+
+---
+
+### 8. Set Accuracy
+**Description:** Set the accuracy of the fake location (in meters).
+
+```sh
+adb shell am broadcast -a com.dvhamham.SET_ACCURACY --ef accuracy 5.0
+```
+
+---
+
+### 9. Set Altitude
+**Description:** Set the altitude of the fake location (in meters).
+
+```sh
+adb shell am broadcast -a com.dvhamham.SET_ALTITUDE --es altitude "100.0"
+```
+
+---
+
+### 10. Set Speed
+**Description:** Set the speed for the fake location (in m/s).
+
+```sh
+adb shell am broadcast -a com.dvhamham.SET_SPEED --ef speed 10.0
+```
+
+---
+
+### 11. Randomize Location
+**Description:** Enable location randomization within a specified radius (in meters).
+
+```sh
+adb shell am broadcast -a com.dvhamham.RANDOMIZE_LOCATION --es randomize_radius "50.0"
+```
+
+---
+
+### 12. Create New Favorite
+**Description:** Save a new location to the favorites list.
+
+```sh
+adb shell am broadcast -a com.dvhamham.CREATE_FAVORITE --es favorite_name "Work" --es latitude "40.7128" --es longitude "-74.0060"
+```
+
+---
+
+### 13. Delete Favorite
+**Description:** Delete a location from favorites by name.
+
+```sh
+adb shell am broadcast -a com.dvhamham.DELETE_FAVORITE --es favorite_name "Work"
+```
+
+---
+
+### 14. Get Favorites List
+**Description:** Display all saved favorite locations.
+
+```sh
+adb shell am broadcast -a com.dvhamham.GET_FAVORITES
+```
+
+---
+
+### 15. Start Timed Location
+**Description:** Activate the timed location feature (experimental).
+
+```sh
+adb shell am broadcast -a com.dvhamham.START_TIMED_LOCATION
+```
+
+---
+
+### 16. Stop Timed Location
+**Description:** Deactivate the timed location feature.
+
+```sh
+adb shell am broadcast -a com.dvhamham.STOP_TIMED_LOCATION
+```
+
+---
+
+### 17. Load Path File
+**Description:** Load a path file (GeoJSON or JSON) from storage.
+
+```sh
+adb shell am broadcast -a com.dvhamham.LOAD_PATH_FILE --es path_file "/sdcard/Download/path.json"
+```
+
+---
+
+### 18. Set Heading
+**Description:** Set the movement heading (in degrees).
+
+```sh
+adb shell am broadcast -a com.dvhamham.SET_HEADING --ef heading 90.0
+```
+
+---
+
+### 19. Set Bearing
+**Description:** Set the bearing for the location (in degrees).
+
+```sh
+adb shell am broadcast -a com.dvhamham.SET_BEARING --ef bearing 180.0
+```
+
+---
+
+### 20. Get Location History
+**Description:** Display the history of set locations.
+
+```sh
+adb shell am broadcast -a com.dvhamham.GET_LOCATION_HISTORY
+```
+
+---
+
+### 21. Clear Location History
+**Description:** Delete all locations from the location history.
+
+```sh
+adb shell am broadcast -a com.dvhamham.CLEAR_LOCATION_HISTORY
+```
+
+---
+
+### ℹ️ Notes:
+- The app must be installed and enabled on the device.
+- You can change the values (latitude, longitude, favorite_name, etc.) as needed.
+- Some commands may require special permissions or settings.
+- For more details, check the app source code or contact the developer.
 
 ---
 
